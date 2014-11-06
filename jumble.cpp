@@ -57,16 +57,25 @@ int main(int argc, char *argv[]){
 int length = 0;
 	length = line1.length();
 	length /= 2;
-	string scrambled[length];
+	cout << length << " This is the lenght" << endl;
+	char scrambled[length];
 	for(int i =0; i < length; i++){
 		scrambled[i] = line1[i];
 	} 
 	string answerWord;
-	for(int j =0; j < 26; j++){
-		scrambled[j] = scrambled[j] +1;
-	cout << scrambled[j] << endl;
-		answerWord = dictionary.getValue(scrambled);
-	}
+	try{	
+	answerWord = dictionary.getValue(scrambled);
+	random_shuffle(scrambled, scrambled+length);
+	cout << "The word is " << answerWord << endl;
+	 }
+	catch(int number){
+	}	
+	
+//	for(int j =0; j < length; j++){
+//		scrambled[j] = scrambled[j+1];
+//	cout << scrambled[j] << endl;
+//			answerWord = dictionary.getValue(scrambled);
+//	}
 	// now read in the file
 cout << "this program will do really cool stuff...." << endl;
 
