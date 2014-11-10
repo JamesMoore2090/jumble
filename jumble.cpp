@@ -14,7 +14,8 @@
 #include <algorithm>
 using namespace std;
 
-
+// functions protypes
+string descramble(string &, const BinaryTree &);
 int main(int argc, char *argv[]){
 	
 	if(argc != 2){
@@ -44,9 +45,8 @@ int main(int argc, char *argv[]){
 	random_shuffle(dict.begin(), dict.end());
 	// this inserts the words into the BST
 	for(int i= 0; i < count; i++){
-//		dict[i] = toupper(dict[i]);
 		dictionary.insert(dict[i], dict[i]);
-	} 
+	}// end for 
 	string line1, line2, line3, line4, question, answer;
 	getline(file, line1);
 	getline(file, line2);
@@ -57,27 +57,33 @@ int main(int argc, char *argv[]){
 int length = 0;
 	length = line1.length();
 	length /= 2;
-	cout << length << " This is the lenght" << endl;
 	char scrambled[length];
 	for(int i =0; i < length; i++){
+		line1[i] = tolower(line1[i]);
 		scrambled[i] = line1[i];
 	} 
-	string answerWord;
-	try{	
-	answerWord = dictionary.getValue(scrambled);
-	random_shuffle(scrambled, scrambled+length);
-	cout << "The word is " << answerWord << endl;
-	 }
-	catch(int number){
-	}	
-	
-//	for(int j =0; j < length; j++){
-//		scrambled[j] = scrambled[j+1];
-//	cout << scrambled[j] << endl;
-//			answerWord = dictionary.getValue(scrambled);
-//	}
+	answer = descramble(line1 , dictionary); 
+
+
 	// now read in the file
 cout << "this program will do really cool stuff...." << endl;
 
 }// end main
 
+// this function is used to de scramble the letters
+// then it returns the descrambled word!
+string descramble(string &scrambledWord, const BinaryTree &Dict){
+	string answerWord;
+	int length = scrambledWord.length();
+	length /= 2;
+	char word[length];
+	for(int i = 0; i < length; i++){
+		word[i] = scrambledWord[i];
+		cout << word[i] << endl;
+	}
+	while(next_permutation(word, word+length-1)){
+	cout << word << endl;
+	}
+
+
+}// end function
