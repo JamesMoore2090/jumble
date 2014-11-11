@@ -16,6 +16,7 @@ using namespace std;
 
 // functions protypes
 string descramble(string &, const BinaryTree &);
+string missingLetter(const string &, const string&);
 int main(int argc, char *argv[]){
 	
 	if(argc != 2){
@@ -75,6 +76,22 @@ int main(int argc, char *argv[]){
 	unscrambled2 = descramble(line2 , dictionary); 
 	unscrambled3 = descramble(line3 , dictionary); 
 	unscrambled4 = descramble(line4 , dictionary); 
+	
+	string Letter1, Letter2, Letter3, Letter4;
+	Letter1 = missingLetter(line1 , unscrambled1);
+	cout << "This is what returns " << Letter1 << endl;
+	Letter2 = missingLetter(line2 , unscrambled2);
+	cout << "This is what returns " << Letter2 << endl;
+	Letter3 = missingLetter(line3 , unscrambled3);
+	cout << "This is what returns " << Letter3 << endl;
+	Letter4 = missingLetter(line4 , unscrambled4);
+	cout << "This is what returns " << Letter4 << endl;
+	
+	string scrambledLetters = Letter1 + Letter2 + Letter3 + Letter4;
+	cout << scrambledLetters << " this is scrambledLetter" << endl;
+
+
+
 	cout << unscrambled1 << endl << unscrambled2 << endl;
 	cout << unscrambled3 << endl << unscrambled4 << endl;
 	cout << question << endl;
@@ -88,6 +105,7 @@ cout << "this program will do really cool stuff...." << endl;
 // then it returns the descrambled word!
 string descramble(string &scrambledWord, const BinaryTree &Dict){
 	string answerWord;
+	cout << scrambledWord << " ScrambledWord" << endl;
 	//This is the dummy proof test. is the word passing through 
 	//an actual word? if so return no need to go any furter
 	answerWord = Dict.getValue(scrambledWord);
@@ -96,18 +114,46 @@ string descramble(string &scrambledWord, const BinaryTree &Dict){
 	}// end if
 	//We now know that what is being passed through is not a real word.
 	int length = scrambledWord.length();
+	cout << length << " before math" << endl; 
 	length = (length/ 2);
 	char word[length];
+	cout << length << " The Length" << endl;
 	//changing the string in to a char so we can use the next_permutation
 	for(int i = 0; i < length; i++){
 		word[i] = scrambledWord[i];
 	}// end for
+	cout << word << " before sort" << endl;
 	sort(word, word+length);
+	cout << word << " after sort" << endl;
 	//use the next_permutation and the dictionary to find the word!
 	while(next_permutation(word, word+length)){
+		cout << word << " permutation " << endl;
 		answerWord = Dict.getValue(word);
 		if(answerWord != "Null"){
 			return answerWord;
 		}// end if
 	} // end while loop
+}// end function
+
+
+// this functions is used to find which position of the missing letters and return them.
+// then you will "add all the letters up" in a string then descramble the word!
+string missingLetter(const string & scrambledLine, const string &word){
+	char letters[100];
+	int length = scrambledLine.length();
+	int halfLength = (length/2);
+	char Line[halfLength];
+	int a = halfLength+1;
+	for(int j = 0; j < halfLength; j++){
+		Line[j] = scrambledLine[a];
+		a++;
+	}
+	int n = 0;
+	for(int i = 0; i < halfLength; i++){
+		if(Line[i] == 'o'){
+			letters[n] = word[i];
+			n++;
+		}// end if	 
+	}// end for
+	return string(letters);
 }// end function
