@@ -48,24 +48,38 @@ int main(int argc, char *argv[]){
 		dictionary.insert(dict[i], dict[i]);
 	}// end for 
 	string line1, line2, line3, line4, question, answer;
+	string unscrambled1, unscrambled2, unscrambled3, unscrambled4;
 	getline(file, line1);
 	getline(file, line2);
 	getline(file, line3);
 	getline(file, line4);
 	getline(file, question);
 	getline(file, answer);
-int length = 0;
-	length = line1.length();
-	length /= 2;
-	char scrambled[length];
-	for(int i =0; i < length; i++){
+	int length1 = line1.length();
+	int length2 = line2.length();
+	int length3 = line3.length();
+	int length4 = line4.length();
+	for(int i =0; i < length1; i++){
 		line1[i] = tolower(line1[i]);
-		scrambled[i] = line1[i];
-	} 
-	answer = descramble(line1 , dictionary); 
+	}// end for
+ 	for(int i =0; i < length2; i++){
+		line2[i] = tolower(line2[i]);
+	}
+	for(int i =0; i < length3; i++){
+		line3[i] = tolower(line3[i]);
+	}
+	for(int i =0; i < length4; i++){
+		line4[i] = tolower(line4[i]);
+	}
+	unscrambled1 = descramble(line1 , dictionary); 
+	unscrambled2 = descramble(line2 , dictionary); 
+	unscrambled3 = descramble(line3 , dictionary); 
+	unscrambled4 = descramble(line4 , dictionary); 
+	cout << unscrambled1 << endl << unscrambled2 << endl;
+	cout << unscrambled3 << endl << unscrambled4 << endl;
+	cout << question << endl;
+	cout << answer << endl;
 
-
-	// now read in the file
 cout << "this program will do really cool stuff...." << endl;
 
 }// end main
@@ -74,16 +88,26 @@ cout << "this program will do really cool stuff...." << endl;
 // then it returns the descrambled word!
 string descramble(string &scrambledWord, const BinaryTree &Dict){
 	string answerWord;
+	//This is the dummy proof test. is the word passing through 
+	//an actual word? if so return no need to go any furter
+	answerWord = Dict.getValue(scrambledWord);
+	if(answerWord != "Null"){
+		return answerWord;
+	}// end if
+	//We now know that what is being passed through is not a real word.
 	int length = scrambledWord.length();
-	length /= 2;
+	length = (length/ 2);
 	char word[length];
+	//changing the string in to a char so we can use the next_permutation
 	for(int i = 0; i < length; i++){
 		word[i] = scrambledWord[i];
-		cout << word[i] << endl;
-	}
-	while(next_permutation(word, word+length-1)){
-	cout << word << endl;
-	}
-
-
+	}// end for
+	sort(word, word+length);
+	//use the next_permutation and the dictionary to find the word!
+	while(next_permutation(word, word+length)){
+		answerWord = Dict.getValue(word);
+		if(answerWord != "Null"){
+			return answerWord;
+		}// end if
+	} // end while loop
 }// end function

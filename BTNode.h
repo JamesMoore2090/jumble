@@ -1,21 +1,33 @@
 #ifndef BTNode_H
 #define BTNode_H
 
-#include <iostream>
+#include <string>
+using namespace std;
 
-class BinaryTree{
-public:
-	insert(string);
-private:
-	BTNode *root:
-}	
 
 class BTNode{
 public:
-	insert(string);
+	void insert(string key, string value);
+	string getValue(string key) const;
+	BTNode(string key, string value);
 private:
+	string key;
+	string value;
 	BTNode *left, *right;
 	
 };
+
+
+class BinaryTree{
+
+public:
+	void insert(string key, string value);
+	string getValue(string key) const;
+	BinaryTree();
+private:
+	BTNode *root;
+};	
+
+
 
 #endif
