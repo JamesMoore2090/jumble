@@ -82,8 +82,16 @@ int main(int argc, char *argv[]){
 	cout << unscrambled1 << endl << unscrambled2 << endl;
 	cout << unscrambled3 << endl << unscrambled4 << endl;
 	cout << question << endl;
+	int fvalue = 1;
+	for(int i = 0; i < answer.length(); i++){
+		if(answer[i] == 34){
+			cout << answer << " " << finalAnswer << " \" " << endl;
+			fvalue = 0;
+		} // end if
+	}// end for
+	if(fvalue != 0){
 	cout << answer << " " << finalAnswer << endl;
-
+	}
 
 }// end main
 
@@ -91,8 +99,7 @@ int main(int argc, char *argv[]){
 // then it returns the descrambled word!
 string descramble(string &scrambledWord, const BinaryTree &Dict){
 	string answerWord;
-	//This is the dummy proof test. is the word passing through 
-	//an actual word? if so return no need to go any furter
+	// check to see of what is being passed is a real word
 	answerWord = Dict.getValue(scrambledWord);
 	if(answerWord != "Null"){
 		return answerWord;
@@ -105,7 +112,13 @@ string descramble(string &scrambledWord, const BinaryTree &Dict){
 	for(int i = 0; i < length; i++){
 		word[i] = scrambledWord[i];
 	}// end for
+	word[length] = '\0';
 	sort(word, word+length);
+	// because we have sort the letter in aplh order we have to test to see if it is the dictionary.
+	answerWord = Dict.getValue(word);
+	if(answerWord != "Null"){
+		return answerWord;
+	}// end if
 	//use the next_permutation and the dictionary to find the word!
 	while(next_permutation(word, word+length)){
 		answerWord = Dict.getValue(word);
@@ -158,6 +171,12 @@ string AnswerDescrambler(string & word, const BinaryTree & Dict){
 	}// end if
 	// sort the word so we get all the permutation
 	sort(word.begin(), word.end());
+	// Because we sorted the letters now check to  see if it in the dictionary.
+	answerWord = Dict.getValue(word);
+	if(answerWord != "Null"){
+		return answerWord;
+	}// end if
+	
 	//use the next_permutation and the dictionary to find the word!
 	while(next_permutation(word.begin(), word.end())){
 		answerWord = Dict.getValue(word);
