@@ -111,7 +111,12 @@ string descramble(string &scrambledWord, const BinaryTree &Dict){
 	//changing the string in to a char so we can use the next_permutation
 	for(int i = 0; i < length; i++){
 		word[i] = scrambledWord[i];
-	}// end for
+	}// end for	
+	// check to see of what is being passed is a real word
+	answerWord = Dict.getValue(word);
+	if(answerWord != "Null"){
+		return answerWord;
+	}// end if
 	word[length] = '\0';
 	sort(word, word+length);
 	// because we have sort the letter in aplh order we have to test to see if it is the dictionary.
